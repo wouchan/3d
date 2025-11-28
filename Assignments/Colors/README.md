@@ -19,4 +19,3 @@ Termin oddania: 12.12.21 23:59 5 pkt.
 
 8. Color the roof of the house red and the walls green. 
    
-
