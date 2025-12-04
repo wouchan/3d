@@ -44,12 +44,6 @@ void SimpleShapeApplication::init() {
             0.5f, 0.0f, 0.0f,
             0.0f, 1.0f, 0.0f,
 
-            0.5f, 0.0f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-
-            -0.5f, -0.5f, 0.0f,
-            0.0f, 1.0f, 0.0f,
-
             0.5f, -0.5f, 0.0f,
             0.0f, 1.0f, 0.0f,
         };
@@ -57,7 +51,7 @@ void SimpleShapeApplication::init() {
     std::vector<GLushort> indices = {
         0, 1, 2,
         3, 4, 5,
-        6, 7, 8,
+        5, 4, 6
     };
 
     // Generating the buffer and loading the vertex data into it.
@@ -94,7 +88,7 @@ void SimpleShapeApplication::init() {
 
     // Setting the background color of the rendering window,
     // I suggest not to use white or black for better debuging.
-    glClearColor(0.81f, 0.81f, 0.8f, 1.0f);
+    glClearColor(0.2f, 0.2f, 1.0f, 1.0f);
 
     // This setups an OpenGL vieport of the size of the whole rendering window.
     auto[w, h] = frame_buffer_size();
@@ -107,6 +101,6 @@ void SimpleShapeApplication::init() {
 void SimpleShapeApplication::frame() {
     // Binding the VAO will setup all the required vertex buffers.
     glBindVertexArray(vao_);
-    glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_INT, 0);
+    glDrawElements(GL_TRIANGLES, 9, GL_UNSIGNED_SHORT, 0);
     glBindVertexArray(0);
 }
