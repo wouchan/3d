@@ -91,12 +91,12 @@ void SimpleShapeApplication::init() {
     GLuint transform_buffer_handle;
     glGenBuffers(1, &transform_buffer_handle);
     OGL_CALL(glBindBuffer(GL_UNIFORM_BUFFER, transform_buffer_handle));
-    glBufferData(GL_UNIFORM_BUFFER, 48, nullptr, GL_STATIC_DRAW);
+    glBufferData(GL_UNIFORM_BUFFER, 40, nullptr, GL_STATIC_DRAW);
     glBindBufferBase(GL_UNIFORM_BUFFER, 1, transform_buffer_handle);
     glBufferSubData(GL_UNIFORM_BUFFER, 0, 8, &scale);
-    glBufferSubData(GL_UNIFORM_BUFFER, 16, 8, &trans);
-    glBufferSubData(GL_UNIFORM_BUFFER, 32, 8, &rot[0]);
-    glBufferSubData(GL_UNIFORM_BUFFER, 40, 8, &rot[1]);
+    glBufferSubData(GL_UNIFORM_BUFFER, 8, 8, &trans);
+    glBufferSubData(GL_UNIFORM_BUFFER, 16, 8, &rot[0]);
+    glBufferSubData(GL_UNIFORM_BUFFER, 32, 8, &rot[1]);
     glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     // This setups a Vertex Array Object (VAO) that  encapsulates
