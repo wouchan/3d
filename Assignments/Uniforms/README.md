@@ -88,5 +88,3 @@ parameters of this transformation will be passed to vertex shader via  uniform i
    ```
    It is best to add the transformations one by  one.   Start with translation, then scale and finally rotation. Are the 
    parenthesis around  `scale*a_vertex_position.xy` really needed? Why? 
-
-
