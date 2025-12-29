@@ -38,32 +38,32 @@ void SimpleShapeApplication::init() {
 
     // A vector containing the x,y,z vertex coordinates for the triangle.
     std::vector<GLfloat> vertices = {
-            // bottom
-            -0.5, 0.0, -0.5,
-            0.5, 0.0, -0.5,
-            -0.5, 0.0, 0.5,
-            0.5, 0.0, 0.5,
+        // bottom
+        -0.5, 0.0, -0.5,
+        0.5, 0.0, -0.5,
+        -0.5, 0.0, 0.5,
+        0.5, 0.0, 0.5,
 
-            // front
-            0.0, 1.0, 0.0,
-            -0.5, 0.0, 0.5,
-            0.5, 0.0, 0.5,
+        // front
+        0.0, 1.0, 0.0,
+        -0.5, 0.0, 0.5,
+        0.5, 0.0, 0.5,
 
-            // left
-            0.0, 1.0, 0.0,
-            -0.5, 0.0, -0.5,
-            -0.5, 0.0, 0.5,
+        // left
+        0.0, 1.0, 0.0,
+        -0.5, 0.0, -0.5,
+        -0.5, 0.0, 0.5,
 
-            // back
-            0.0, 1.0, 0.0,
-            0.5, 0.0, -0.5,
-            -0.5, 0.0, -0.5,
+        // back
+        0.0, 1.0, 0.0,
+        0.5, 0.0, -0.5,
+        -0.5, 0.0, -0.5,
 
-            // right
-            0.0, 1.0, 0.0,
-            0.5, 0.0, 0.5,
-            0.5, 0.0, -0.5,
-        };
+        // right
+        0.0, 1.0, 0.0,
+        0.5, 0.0, 0.5,
+        0.5, 0.0, -0.5,
+    };
 
     std::vector<GLushort> indices = {
         // bottom
@@ -82,7 +82,6 @@ void SimpleShapeApplication::init() {
     pyramid->allocate_vertex_buffer(vertices.size() * sizeof(GLfloat), GL_STATIC_DRAW);
     pyramid->load_vertices(0, vertices.size() * sizeof(GLfloat), vertices.data());
     pyramid->vertex_attrib_pointer(0, 3, GL_FLOAT, 3 * sizeof(GLfloat), 0);
-    pyramid->vertex_attrib_pointer(1, 3, GL_FLOAT, 3 * sizeof(GLfloat), 3 * sizeof(GLfloat));
 
     pyramid->allocate_index_buffer(indices.size() * sizeof(GLushort), GL_STATIC_DRAW);
     pyramid->load_indices(0, indices.size() * sizeof(GLushort), indices.data());
@@ -94,9 +93,6 @@ void SimpleShapeApplication::init() {
     pyramid->add_submesh(15, 18, material_purple); // right
 
     add_submesh(pyramid);
-
-    float strength = 1.0;
-    float color[3] = { 1.0, 1.0, 1.0 };
 
     int w, h;
     std::tie(w, h) = frame_buffer_size();
@@ -115,15 +111,6 @@ void SimpleShapeApplication::init() {
     );
 
     set_controler(new CameraControler(camera()));
-
-    GLuint modifier_buffer_handle;
-    glGenBuffers(1, &modifier_buffer_handle);
-    OGL_CALL(glBindBuffer(GL_UNIFORM_BUFFER, modifier_buffer_handle));
-    glBufferData(GL_UNIFORM_BUFFER, 8 * sizeof(float), nullptr, GL_STATIC_DRAW);
-    glBindBufferBase(GL_UNIFORM_BUFFER, 0, modifier_buffer_handle);
-    glBufferSubData(GL_UNIFORM_BUFFER, 0, 4, &strength);
-    glBufferSubData(GL_UNIFORM_BUFFER, 16, 12, color);
-    glBindBuffer(GL_UNIFORM_BUFFER, 0);
 
     glGenBuffers(1, &u_pvm_buffer_);
     glBindBuffer(GL_UNIFORM_BUFFER, u_pvm_buffer_);
