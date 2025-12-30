@@ -7,7 +7,7 @@ layout(std140, binding=0) uniform Modifiers {
 #else
     layout(std140) uniform Color {
     #endif
-    vec4  Kd;
+    vec4 Kd;
     bool use_map_Kd;
 };
 

@@ -86,7 +86,7 @@ endif ()
 
 find_package(OpenGL REQUIRED)
 
-# My part 
+# My part
 
 link_libraries(OpenGL::GL glfw glm glad)
 add_subdirectory(src/Application)
@@ -111,7 +111,7 @@ endif ()
 
 
 #Assignments
-set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid Resizing Zoom CameraMovement Meshes Materials MeshesMaterials SceneGraph Textures Phong PBR MultipleLights NormalMaps)
+set(ASSIGNMENTS Triangle House Colors Indices Uniforms PVM Pyramid Resizing Zoom CameraMovement Meshes Materials SceneGraph Textures Phong PBR MultipleLights NormalMaps)
 
 set(ASSIGNMENTS_DIR ${SOURCE_DIR}/Assignments)
 link_libraries(application)

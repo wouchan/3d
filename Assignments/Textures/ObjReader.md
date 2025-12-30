@@ -111,4 +111,4 @@ Teraz już wszystko powinno działać.
 
 
 Jeśli już piramidka pojawiła się nam na ekrenie możemy wyczyścić metodę `init` z całego niepotrzebnego kodu tworzącego piramidkę, a następnie 
-podmienić ładowanie pliku `pyramid.obj` na `blue_marble.obj`. 
+podmienić ładowanie pliku `pyramid.obj` na `blue_marble.obj`.

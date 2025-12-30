@@ -14,6 +14,7 @@
 #include "Application/utils.h"
 #include "Engine/Material.h"
 #include "spdlog/spdlog.h"
+#include "Engine/mesh_loader.h"
 
 #define STB_IMAGE_IMPLEMENTATION  1
 
@@ -22,114 +23,9 @@
 void SimpleShapeApplication::init() {
     xe::ColorMaterial::init();
 
-    stbi_set_flip_vertically_on_load(true);
-    GLint width, height, channels;
-    auto texture_file = std::string(ROOT_DIR) + "/Models/multicolor.png";
-    auto img = stbi_load(texture_file.c_str(), &width, &height, &channels, 0);
-    if (!img) {
-        spdlog::warn("Could not read image from file `{}'", texture_file);
-    }
-
-    GLenum format = GL_RGB;
-    if (channels == 4) {
-        format = GL_RGBA;
-    }
-
-    GLuint texture;
-    glGenTextures(1, &texture);
-    glBindTexture(GL_TEXTURE_2D, texture);
-
-    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, format, GL_UNSIGNED_BYTE, img);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
-    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
-
-    glBindTexture(GL_TEXTURE_2D, 0u);
-
-    auto pyramid = new xe::Mesh;
-    auto material = new xe::ColorMaterial(glm::vec4(1.0, 1.0, 1.0, 1.0));
-    material->set_texture(texture);
-
-    // A vector containing the x,y,z vertex coordinates for the triangle.
-    std::vector<GLfloat> vertices = {
-        // bottom
-        -0.5, 0.0, -0.5,
-        0.191, 0.5,
-
-        0.5, 0.0, -0.5,
-        0.5, 0.191,
-
-        -0.5, 0.0, 0.5,
-        0.5, 0.809,
-
-        0.5, 0.0, 0.5,
-        0.809, 0.5,
-
-        // front
-        0.0, 1.0, 0.0,
-        0.0, 1.0,
-
-        -0.5, 0.0, 0.5,
-        0.191, 0.5,
-
-        0.5, 0.0, 0.5,
-        0.5, 0.809,
-
-        // left
-        0.0, 1.0, 0.0,
-        0.0, 0.0,
-
-        -0.5, 0.0, -0.5,
-        0.5, 0.191,
-
-        -0.5, 0.0, 0.5,
-        0.191, 0.5,
-
-        // back
-        0.0, 1.0, 0.0,
-        1.0, 0.0,
-
-        0.5, 0.0, -0.5,
-        0.809, 0.5,
-
-        -0.5, 0.0, -0.5,
-        0.5, 0.191,
-
-        // right
-        0.0, 1.0, 0.0,
-        1.0, 1.0,
-
-        0.5, 0.0, 0.5,
-        0.5, 0.809,
-
-        0.5, 0.0, -0.5,
-        0.809, 0.5,
-    };
-
-    std::vector<GLushort> indices = {
-        // bottom
-        0, 1, 2,
-        2, 1, 3,
-        // front
-        4, 5, 6,
-        // left
-        7, 8, 9,
-        // back
-        10, 11, 12,
-        // right
-        13, 14, 15,
-    };
-
-    pyramid->allocate_vertex_buffer(vertices.size() * sizeof(GLfloat), GL_STATIC_DRAW);
-    pyramid->load_vertices(0, vertices.size() * sizeof(GLfloat), vertices.data());
-    pyramid->vertex_attrib_pointer(0, 3, GL_FLOAT, 5 * sizeof(GLfloat), 0);
-    pyramid->vertex_attrib_pointer(1, 2, GL_FLOAT, 5 * sizeof(GLfloat), 3 * sizeof(GLfloat));
-
-    pyramid->allocate_index_buffer(indices.size() * sizeof(GLushort), GL_STATIC_DRAW);
-    pyramid->load_indices(0, indices.size() * sizeof(GLushort), indices.data());
-
-    pyramid->add_submesh(0, 18, material);
-
-    add_submesh(pyramid);
+    auto model = xe::load_mesh_from_obj(std::string(ROOT_DIR) + "/Models/blue_marble.obj",
+                                                      std::string(ROOT_DIR) + "/Models");
+    add_submesh(model);
 
     int w, h;
     std::tie(w, h) = frame_buffer_size();
